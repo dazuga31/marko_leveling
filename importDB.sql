@@ -1,0 +1,28 @@
+-- Dumping structure for table s2_fivem.marko_leveling
+CREATE TABLE IF NOT EXISTS `marko_leveling` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) DEFAULT NULL,
+  `identifier` varchar(50) DEFAULT NULL,
+  `busdriver_xp` int(11) DEFAULT 0,
+  `busdriver_lvl` int(11) DEFAULT 0,
+  `lumberjack_xp` int(11) DEFAULT 0,
+  `lumberjack_lvl` int(11) DEFAULT 0,
+  `medic_xp` int(11) DEFAULT 0,
+  `medic_lvl` int(11) DEFAULT 0,
+  `gruppe_xp` int(11) DEFAULT 0,
+  `gruppe_lvl` int(11) DEFAULT 0,
+  `deliveryman_xp` int(11) DEFAULT 0,
+  `deliveryman_lvl` int(11) DEFAULT 0,
+  `postman_xp` int(11) DEFAULT 0,
+  `postman_lvl` int(11) DEFAULT 0,
+  `player_xp` int(11) DEFAULT 0,
+  `player_lvl` int(11) DEFAULT 0,
+  `player_playtime` int(11) DEFAULT 0,
+  `toolbox_xp` int(11) DEFAULT 0,
+  `toolbox_lvl` int(11) DEFAULT 0,
+  `carreturn_xp` int(11) DEFAULT 0,
+  `carreturn_lvl` int(11) DEFAULT 0,
+  `carjack_xp` int(11) DEFAULT 0,
+  `carjack_lvl` int(11) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
