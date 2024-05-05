@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Стилізація контейнера, що вміщує UI компоненти */
+#ui-container {
+    display: none; /* Початково прихований */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Центрування контейнера на сторінці */
+    width: 80%; /* Відносна ширина від ширини вікна браузера */
+    max-width: 960px; /* Максимальна ширина контейнера */
+    background-color: #ffffffd2; /* Білий фон контейнера */
+    border: 1px solid #b0b0b0c4; /* Світло-сіра рамка навколо контейнера */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Тінь для підкреслення важливості контейнера */
+    padding: 20px;
+    border-radius: 8px; /* Закруглені краї контейнера */
+    z-index: 1000; /* Забезпечує, що контейнер буде над іншими елементами */
+}
+
+h1 {
+    font-size: 2.5rem; /* Розмір шрифту для заголовка */
+    color: #007bff; /* Синій колір, який часто використовується в дизайнах Bootstrap */
+    text-transform: uppercase; /* Всі літери великі */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Тінь для тексту, що додає глибину */
+    margin: 20px 0;
+}
+
+/* Стилізація контейнеру, де розміщені всі професії */
+.grid-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    width: 90%;
+    margin-top: 20px;
+}
+
+.profession-section {
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.profession-section:hover {
+    transform: scale(1.05); /* При наведенні збільшуємо секцію */
+}
+
+.profession-section h2 {
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+.profession-section p {
+    font-size: 16px;
+    color: #666;
+}
+
+.profession-section span {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Медіа-запити для адаптивності дизайну */
+@media (max-width: 768px) {
+    .grid-box {
+        grid-template-columns: 1fr; /* Один стовпець на маленьких екранах */
+    }
+}
+
+@media (max-width: 480px) {
+    #ui-container {
+        width: 95%; /* Ширший контейнер на дуже маленьких екранах */
+        padding: 10px;
+    }
+    
+    .profession-section {
+        padding: 10px;
+    }
+}
