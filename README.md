@@ -55,7 +55,59 @@ AddEventHandler('17mov_deliverer:CreatePed', function(letterInfo)
     TriggerClientEvent('ak4y-battlepass:addtaskcount:standart', src, 15, 1)
 end)
 
+```
 
+Замініть функцію `function Pay` на:
+
+```lua
+
+function Pay(source, amount)
+    local itemsToGive = amount / Config.Price
+    
+    if Config.Framework == "QBCore" then
+        local Player = Core.Functions.GetPlayer(source)
+        if Player ~= nil and Player.Functions ~= nil then
+            Player.Functions.AddMoney("cash", amount)
+
+            -- Перевірка кількості зібраних листів
+            if ParcelDelivered[source] and ParcelDelivered[source] >= 10 then
+                -- Винагородження гравця
+                TriggerEvent('RewardPlayer', source, "none", 1, 'deliveryman_lvl', 'true')
+            else
+                print("Гравець ще не відвіз достатньої кількості пакунків.", source)
+            end
+
+            for _, item in pairs(Config.RewardItemsToGive) do
+                if math.random(100) <= item.chance then
+                    Player.Functions.AddItem(item.item_name, math.floor(itemsToGive))
+                end
+            end
+        end
+    elseif Config.Framework == "ESX" then
+        local xPlayer = Core.GetPlayerFromId(source)
+        if xPlayer ~= nil and xPlayer.addMoney ~= nil then
+            xPlayer.addMoney(amount)
+
+            -- Перевірка кількості зібраних листів
+            if ParcelDelivered[source] and ParcelDelivered[source] >= 10 then
+                -- Винагородження гравця
+                TriggerEvent('RewardPlayer', source, "none", 1, 'deliveryman_lvl', 'true')
+            else
+                print("Гравець ще не відвіз достатньої кількості пакунків.")
+            end
+
+            for _, item in pairs(Config.RewardItemsToGive) do
+                if math.random(100) <= item.chance then
+                    xPlayer.addInventoryItem(item.item_name, math.floor(itemsToGive))
+                end
+            end
+        end
+    else
+        -- Підтримка інших фреймворків
+    end
+end
+
+```
 
 
 ## Використання
