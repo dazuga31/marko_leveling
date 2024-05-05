@@ -24,6 +24,9 @@
 Нище будуть наведені методи інтеграції рівневої системи в скрипти професій від [17Movement](https://discord.gg/wjZe8cKf)
 
 
+## Інтеграція в 17Movment
+Дивіться файл [17MOVMENT_INTEGRATION.md](17MOVMENT_INTEGRATION.md) для деталей.
+
 
 ## Використання
 
