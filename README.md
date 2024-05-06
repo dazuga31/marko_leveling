@@ -50,6 +50,25 @@
 Також додайте операючись на інші рядки `Config.Levels` та `Config.Reward`
 І відповідно до бази даних нові колонки `fisherman_lvl` та `fisherman_xp`
 
+##### Додавання нових колонок до веб інтерфейсу.
+
+Додайте новий рядок поруч з іншими в файлі **\marko_leveling\ui\index.html**:
+
+```html
+            <!-- Section for Fisherman -->
+            <div class="profession-section">
+                <h2><i class="fas fa-tree"></i> Fisherman</h2>
+                <p>Level: <span id="fisherman-level">1</span></p>
+                <p>Experience: <span id="fisherman-exp">0</span></p>
+            </div>
+```
+
+Додайте новий рядок поруч з іншими в файлі **\marko_leveling\ui\script.js**:
+```js
+    document.getElementById('fisherman-level').innerText = data['fisherman_lvl'] || "0";
+    document.getElementById('fisherman-exp').innerText = data['fisherman_xp'] || "0";
+```
+
 ##### Після цього ви можете викликати тригер додавання **xp** для риболова зо допомогою:
 
 ```lua
