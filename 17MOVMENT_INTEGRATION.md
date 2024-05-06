@@ -1,12 +1,12 @@
-### Інтеграція в 17Movment
+### Integration in 17Movment
 
-#### Модуль `17mov_Deliverer`
+#### Module `17mov_Deliverer`
 
-Модуль `17mov_Deliverer` дозволяє інтегрувати додаткову логіку до системи доставки, надаючи гравцям досвід за доставку посилок, а також відстежувати кількість доставлених посилок.
+The `17mov_Deliverer` module allows you to integrate additional logic into the delivery system, providing players with experience for delivering parcels, as well as tracking the number of parcels delivered.
 
-##### Оновлення `server/functions.lua` в `17mov_Deliverer`
+##### Update `server/functions.lua` in `17mov_Deliverer`
 
-Для інтеграції додайте наступний код перед функцією `Pay(source, amount)`:
+For integration, add the following code before the `Pay(source, amount)` function:
 
 ```lua
 local ParcelDelivered = {}
@@ -32,7 +32,7 @@ end)
 
 ```
 
-##### Замініть функцію `function Pay` на:
+##### Replace `function Pay` with:
 
 ```lua
 
@@ -85,13 +85,13 @@ end
 ```
 
 
-#### Модуль `17mov_GruppeSechs`
+#### Module `17mov_GruppeSechs`
 
-Модуль `17mov_GruppeSechs` дозволяє інтегрувати додаткову логіку до системи працівника інксації, отримувати досвід за доставлені до банкоматів/NPC гроші. Отримувати додаткову винагороду базуючись на рівні гравців.
+The module `17mov_GruppeSechs` allows you to integrate additional logic into the collection worker system, to get experience for money delivered to ATMs/NPCs. Get extra rewards based on player level.
 
-##### Оновлення `server/functions.lua` в `17mov_GruppeSechs`
+##### Update `server/functions.lua` in `17mov_GruppeSechs`
 
-Для інтеграції додайте наступний код перед функцією `Pay(source, amount)`:
+For integration, add the following code before the `Pay(source, amount)` function:
 
 ```lua
 
@@ -116,7 +116,7 @@ end)
 
 ```
 
-##### Замініть функцію `function Pay` на:
+##### Replace `function Pay` with:
 
 ```lua
 function Pay(source, amount)
@@ -164,14 +164,13 @@ function Pay(source, amount)
 end
 
 ```
+#### Module `17mov_Lumberjack`
 
-#### Модуль `17mov_Lumberjack`
+The module `17mov_Lumberjack` allows you to integrate additional logic into the lumberjack system, providing the player with additional payment for the work performed based on his level.
 
-Модуль `17mov_Lumberjack` дозволяє інтегрувати додаткову логіку до системи лісоруба, надавати гравцю додаткову оплату за виконану роботу базуючись на його рівні.
+##### Update `server/functions.lua` in `17mov_Lumberjack`
 
-##### Оновлення `server/functions.lua` в `17mov_Lumberjack`
-
-Для інтеграції додайте наступний код перед функцією `Pay(source, amount)`:
+For integration, add the following code before the `Pay(source, amount)` function:
 
 ```lua
 
@@ -195,10 +194,9 @@ AddEventHandler('17mov_Lumberjack:disableThisTree', function(letterInfo)
 end)
 
 ```
+##### Add to `Config.lua` the line `Config.RequiredTreesForReward = 10 -- Marko Leveling sys` which is responsible for the minimum required number of trees cut down by the player to receive an additional reward.
 
-##### Додайте до `Config.lua` рядок `Config.RequiredTreesForReward = 10 -- Marko Leveling sys` який відповідає за мінімальну необхідну кількість зрубаних дерев гравцем щоб отримати додаткову винагороду.
-
-##### Замініть функцію `function Pay` на:
+##### Replace `function Pay` with:
 
 ```lua
 function Pay(source, amount, logsItem, planksItems, chipsItems, lobbySize)
@@ -272,14 +270,13 @@ end
 
 ```
 
-#### Модуль `17mov_Postman`
+#### Module `17mov_Postman`
 
-Модуль `17mov_Postman` дозволяє інтегрувати додаткову логіку до системи працівника пошти, дає змогу отримати додаткову винагороду після 10+ зібраних листів. Винагорода зележить від рівня гравця.
+The `17mov_Postman` module allows you to integrate additional logic into the postman system, allowing you to get an additional reward after 10+ collected letters. The reward depends on the level of the player.
 
-##### Оновлення `server/functions.lua` в `17mov_Postman`
+##### Update `server/functions.lua` in `17mov_Postman`
 
-Для інтеграції додайте наступний код перед функцією `Pay(source, amount)`:
-
+For integration, add the following code before the `Pay(source, amount)` function:
 ```lua
 
 local PlayerCollectedLetter = {} -- Масив для зберігання кількості зібраних листів для кожного гравця
@@ -312,7 +309,7 @@ end)
 
 ```
 
-##### Замініть функцію `function Pay` на:
+##### Replace `function Pay` with:
 
 ```lua
 function Pay(source, amount)
