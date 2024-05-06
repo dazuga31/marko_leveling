@@ -5,6 +5,6 @@
 
 ## Інтрукція
 ##### Оберіть зручну для вас мову:
-**Англійська** [InstallationENG.md](InstallationENG.md).
-**Українська** [InstallationUA.md](InstallationUA.md).
+* **Англійська** [InstallationENG.md](InstallationENG.md).
+* **Українська** [InstallationUA.md](InstallationUA.md).
 
