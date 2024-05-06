@@ -81,7 +81,7 @@ TriggerEvent('RewardPlayer', source, "none", 1, 'postman_lvl', 'true')
 
 Замість `postman_lvl` ви можете використати будьякий з колонок бази даних який відповідає за рівень гравця, замість **"none", 1** ви можете вказати назву предмету наприклад **bandage** та його кількість **"bandage", 10**.
 - Якщо ви не хочете видавати жоден предмет як винагороду то залишете аргумент як none.
-- Якщо ви хочете видати лише предмет але без грошей то змініть 'true' на 'false'
+- Якщо ви хочете видати лише предмет але без грошей то змініть **'true'** на **'false'**
 
 `Приклад:`
 ```lua
@@ -93,7 +93,7 @@ TriggerEvent('RewardPlayer', source, "bandage", 10, 'postman_lvl', 'false')
 [17Movment](https://discord.gg/wjZe8cKf) - Дякую розробникам за представлені чудові скрипти.
 
 
-## Версії
+## Залежності
 
 [QBcore](http://semver.org/) Актуальна версія [tags on this repository](https://github.com/qbcore-framework/qb-core).
 [OxLib](http://semver.org/) Актуальна версія [tags on this repository](https://github.com/overextended/ox_lib).
@@ -103,3 +103,34 @@ TriggerEvent('RewardPlayer', source, "bandage", 10, 'postman_lvl', 'false')
 
 * **Marko Scripts** - *marko_leveling* - [Discord](https://discord.gg/ptUTdGWtjX)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Версії
+
+* **V-1.0** - Релізна версія.

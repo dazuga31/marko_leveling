@@ -94,7 +94,7 @@ TriggerEvent('RewardPlayer', source, "bandage", 10, 'postman_lvl', 'false')
 [17Movment](https://discord.gg/wjZe8cKf) - Thanks to the developers for the great scripts presented.
 
 
-## Versions
+## Dependencies
 
 [QBcore](http://semver.org/) Current version [tags on this repository](https://github.com/qbcore-framework/qb-core).
 [OxLib](http://semver.org/) Current version of [tags on this repository](https://github.com/overextended/ox_lib).
@@ -103,3 +103,35 @@ TriggerEvent('RewardPlayer', source, "bandage", 10, 'postman_lvl', 'false')
 ## Authors
 
 * **Marko Scripts** - *marko_leveling* - [Discord](https://discord.gg/ptUTdGWtjX)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Versions
+
+* **V-1.0** - Release version.
