@@ -1,10 +1,9 @@
 # Marko Leveling
 
-Рівнева система яка позволяє отримувати досвід та здобувати рівні навичок.
-Скрипт легко імплеминтується в будьякий інший скрипт, тому він чудово підійде для новачків які мають не вилику кількість знань в програмуванні.
+A level system that allows you to gain experience and gain skill levels.
+The script is easily implemented in any other script, so it is perfect for beginners who have a lot of programming knowledge.
 
-## Інтрукція
-##### Оберіть зручну для вас мову:
-* **Англійська** [InstallationENG.md](InstallationENG.md).
-* **Українська** [InstallationUA.md](InstallationUA.md).
-
+## Instruction
+##### Choose a language that is convenient for you:
+* **English** [InstallationENG.md](InstallationENG.md).
+* **Ukrainian** [InstallationUA.md](InstallationUA.md).
