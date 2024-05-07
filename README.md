@@ -9,7 +9,8 @@ The script is easily implemented in any other script, so it is perfect for begin
 * **Ukrainian** [InstallationUA.md](InstallationUA.md).
 
 ## Other Scripts
-  **Ukrainian** [TEBEX]([InstallationUA.md](https://marko-scripts.tebex.io/category/2612556)).
+
+  [TEBEX]([[InstallationUA.md](DISCORD)](https://marko-scripts.tebex.io/category/2612556))).
 
 ## SUPPORT
 **DISCORD** [DISCORD]([InstallationUA.md](DISCORD)).
