@@ -10,7 +10,7 @@ The script is easily implemented in any other script, so it is perfect for begin
 
 ## Other Scripts
 
-  [TEBEX]([[InstallationUA.md](DISCORD)](https://marko-scripts.tebex.io/category/2612556))).
+[  [**TEBEX**]](https://marko-scripts.tebex.io/category/2612556)
 
 ## SUPPORT
-**DISCORD** [DISCORD]([InstallationUA.md](DISCORD)).
+[**DISCORD** ](https://discord.gg/zXJsMTyrqN)
