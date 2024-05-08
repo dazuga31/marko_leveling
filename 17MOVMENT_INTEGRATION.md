@@ -352,3 +352,209 @@ function Pay(source, amount)
 end
 
 ```
+#### Module `17mov_OilRig`
+
+##### Add tihs line in Config.lua:
+```lua
+Config.MinGasProgressRequired = 5
+```
+
+##### Update `server/functions.lua` in `17mov_OilRig`
+
+For integration, add the following code before the `Pay(source, amount)` function:
+```lua
+
+local PlayerGasProgress = {}
+
+RegisterNetEvent('17mov_OilRig:UpdateGasProgress')
+AddEventHandler('17mov_OilRig:UpdateGasProgress', function()
+    local src = source -- Отримуємо source
+    print("17mov_OilRig: Received PlayerGasProgress information for player ID:", src)
+    TriggerEvent('addPlayerExperience', 'oilrig_xp', 1, src)
+    print("17mov_OilRig: Added oilrig_xp to player with identifier:", src)
+
+    if not PlayerGasProgress[src] then
+        PlayerGasProgress[src] = 1
+    else
+        PlayerGasProgress[src] = PlayerGasProgress[src] + 1
+    end
+end)
+
+```
+
+##### Replace `function Pay` with:
+
+```lua
+function Pay(source, amount, gasProgress, tasksProgress, lobbySize)
+    if Config.Framework == "QBCore" then
+        local Player = Core.Functions.GetPlayer(source)
+        if Player ~= nil and Player.Functions ~= nil then
+            Player.Functions.AddMoney("cash", amount)
+
+            if PlayerGasProgress[source] and PlayerGasProgress[source] >= Config.MinGasProgressRequired then
+                -- Rewarding the player
+                TriggerEvent('RewardPlayer', source, "none", 1, 'oilrig_lvl', 'true')
+                print("OILRIG - Player has mined enough gas for additional reward.")
+                Notify(source, "You have mined enough gas and received an additional reward!")
+            else
+                print("OILRIG - Player did not extract enough gas for additional reward.")
+                Notify(source, "You have not collected enough gas for an additional reward.")
+            end
+        end
+    elseif Config.Framework == "ESX" then
+        local xPlayer = Core.GetPlayerFromId(source)
+        if xPlayer ~= nil and xPlayer.addMoney ~= nil then
+            xPlayer.addMoney(amount)
+
+            if PlayerGasProgress[source] and PlayerGasProgress[source] >= Config.MinGasProgressRequired then
+                -- Rewarding the player
+                TriggerEvent('RewardPlayer', source, "none", 1, 'oilrig_lvl', 'true')
+                print("OILRIG - Player has mined enough gas for additional reward.")
+                Notify(source, "You have mined enough gas and received an additional reward!")
+            else
+                print("OILRIG - Player did not extract enough gas for additional reward.")
+                Notify(source, "You have not collected enough gas for an additional reward.")
+            end
+        end
+    else
+        -- Configure here your payment for other frameworks
+        -- Debug message for missing configuration
+        print("OILRIG - Warning: Config is not set. Add this line in Config.lua: Config.MinGasProgressRequired = 5")
+
+        -- Notify the player about missing configuration
+        Notify(source, "OILRIG - Warning: Config is not set. Add this line in Config.lua: Config.MinGasProgressRequired = 5")
+    end
+
+    -- Adding reward items based on gas progress
+    local itemsToAdd = {}
+    for i = 1, math.floor(gasProgress) do
+        for k, item in pairs(Config.RewardItemsToGive) do
+            if math.random(100) <= item.chance and gasProgress >= item.minimumGasProgressPercent then
+                if itemsToAdd[item.itemName] == nil then
+                    itemsToAdd[item.itemName] = 0
+                end
+                itemsToAdd[item.itemName] = itemsToAdd[item.itemName] + item.amountPerPercent
+            end
+        end
+    end
+
+    for k, v in pairs(itemsToAdd) do
+        AddItem(source, k, math.floor(v))
+    end
+end
+
+```
+
+
+#### Module `17mov_Miner`
+
+##### add tihs line in Config.lua:
+
+```lua
+Config.RequiredWallHits = 5
+```
+
+##### Update `server/functions.lua` in `17mov_Miner`
+
+For integration, add the following code before the `Pay(source, amount)` function:
+```lua
+
+local PlayerHitMineWall = {}
+
+RegisterNetEvent('17mov_Miner:WallHit')
+AddEventHandler('17mov_Miner:WallHit', function()
+    local src = source -- Отримуємо source
+    print("17mov_Miner: Received PlayerHitMineWall information for player ID:", src)
+    TriggerEvent('addPlayerExperience', 'miner_xp', 1, src)
+    print("17mov_Miner: Added miner_xp to player with identifier:", src)
+
+    if not PlayerHitMineWall[src] then
+        PlayerHitMineWall[src] = 1
+    else
+        PlayerHitMineWall[src] = PlayerHitMineWall[src] + 1
+    end
+end)
+
+```
+
+##### Replace `function Pay` with:
+
+```lua
+function Pay(source, amount, lobbySize, rawProgress)
+    local percent = math.floor(amount / Config.OnePercentWorth)
+
+    if Config.Framework == "QBCore" then
+        local Player = Core.Functions.GetPlayer(source)
+        if Player ~= nil and Player.Functions ~= nil then
+            Player.Functions.AddMoney("cash", amount)
+        end
+    elseif Config.Framework == "ESX" then
+        local xPlayer = Core.GetPlayerFromId(source)
+        if xPlayer ~= nil and xPlayer.addMoney ~= nil then
+            xPlayer.addMoney(amount)
+        end
+    else
+        -- Configure your payment here
+    end
+
+    -- Adding reward items
+    local itemsToAdd = {}
+
+    for i = 1, percent do
+        for k, item in pairs(Config.RewardItemsToGive) do
+            if math.random(100) <= item.chance and percent >= item.minimumProgressPercent then
+                if itemsToAdd[item.itemName] == nil then
+                    itemsToAdd[item.itemName] = 0
+                end
+
+                itemsToAdd[item.itemName] = itemsToAdd[item.itemName] +  item.amountPerPercent
+            end
+        end
+    end
+
+    for k, v in pairs(itemsToAdd) do
+        AddItem(source, k, v)
+    end
+
+    if Config.RequiredWallHits then
+        if PlayerHitMineWall[source] and PlayerHitMineWall[source] >= Config.RequiredWallHits then
+            -- Rewarding the player for reaching the required wall collision count
+            TriggerEvent('RewardPlayer', source, "none", 1, 'miner_lvl', 'true')
+
+            -- Notifying the player about the reward
+            Notify(source, "You have received a reward for reaching the required number of wall collisions.")
+        else
+            -- Printing a message for insufficient wall collision count
+            print("The player has not hit wall enough times.")
+
+            -- Notifying the player about insufficient wall collision count
+            Notify(source, "You do not have enough hit wall to receive the reward.")
+        end
+    else
+        -- Printing a message for the absence of RequiredWallHits configuration
+        print("Warning: Config.RequiredWallHits is not set.")
+
+        -- Notifying the player about the absence of RequiredWallHits configuration
+        Notify(source, "Warning: Config.RequiredWallHits is not set.")
+    end
+
+    -- Debug messages
+    print("17mov_Miner: Paid player:", source, "Amount:", amount, "Lobby Size:", lobbySize, "Raw Progress:", rawProgress)
+end
+
+function Notify(source, msg)
+    if Config.UseBuiltInNotifications then
+        TriggerClientEvent("17mov_DrawDefaultNotification" .. GetCurrentResourceName(), source, msg)
+    else
+        if Config.Framework == "QBCore" then
+            TriggerClientEvent("QBCore:Notify", source, msg)
+        elseif Config.Framework == "ESX" then
+            TriggerClientEvent("esx:showNotification", source, msg)
+        else
+            TriggerClientEvent("17mov_DrawDefaultNotification" .. GetCurrentResourceName(), source, msg)
+        end
+    end
+end
+
+
+```
