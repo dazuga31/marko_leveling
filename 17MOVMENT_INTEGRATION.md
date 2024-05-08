@@ -25,9 +25,6 @@ AddEventHandler('17mov_deliverer:CreatePed', function(letterInfo)
     else
         ParcelDelivered[src] = ParcelDelivered[src] + 1
     end
-
-    -- Тригер події для оновлення завдань у батлпасі
-    TriggerClientEvent('ak4y-battlepass:addtaskcount:standart', src, 15, 1)
 end)
 
 ```
@@ -110,8 +107,6 @@ AddEventHandler('17mov_GruppeSechs:DeliverThisAtm', function(letterInfo)
     else
         MoneyPackDeliveredToNPC[src] = MoneyPackDeliveredToNPC[src] + 1
     end
-
-    TriggerClientEvent('ak4y-battlepass:addtaskcount:standart', src, 15, 1)
 end)
 
 ```
@@ -159,8 +154,7 @@ function Pay(source, amount)
             end
         end
     else
-        -- Підтримка інших фреймворків
-    end
+  end
 end
 
 ```
@@ -189,8 +183,6 @@ AddEventHandler('17mov_Lumberjack:disableThisTree', function(letterInfo)
     else
         ChoppedTreesCount[src] = ChoppedTreesCount[src] + 1
     end
-
-    TriggerClientEvent('ak4y-battlepass:addtaskcount:standart', src, 15, 1)
 end)
 
 ```
@@ -302,9 +294,6 @@ AddEventHandler('17mov_postman:collectLetter', function(letterInfo)
     else
         PlayerCollectedLetter[src] = PlayerCollectedLetter[src] + 1
     end
-
-    TriggerClientEvent('ak4y-battlepass:addtaskcount:standart', source, 16, 1)
-
 end)
 
 ```
