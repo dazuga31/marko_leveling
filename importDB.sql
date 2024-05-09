@@ -24,10 +24,7 @@ CREATE TABLE IF NOT EXISTS `marko_leveling` (
   `carreturn_lvl` int(11) DEFAULT 0,
   `carjack_xp` int(11) DEFAULT 0,
   `carjack_lvl` int(11) DEFAULT 0,
-  `miner_xp` int(11) DEFAULT 0,
-  `miner_lvl` int(11) DEFAULT 0,
-  `oilrig_lvl` int(11) DEFAULT 0,
-  `oilrig_xp` int(11) DEFAULT 0,
-
+  `total_count_carjack` int(11) DEFAULT 0,
+  `total_return` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

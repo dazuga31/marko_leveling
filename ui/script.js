@@ -72,7 +72,7 @@ function updateUI(data) {
     document.getElementById('gruppe-level').innerText = data['gruppe_xp'] || "0";
     document.getElementById('gruppe-exp').innerText = data['gruppe_xp'] || "0";
 
-    document.getElementById('deliveryman-level').innerText = data['deliveryman_xp'] || "0";
+    document.getElementById('deliveryman-level').innerText = data['deliveryman_lvl'] || "0";
     document.getElementById('deliveryman-exp').innerText = data['deliveryman_xp'] || "0";
 
     document.getElementById('postman-level').innerText = data['postman_lvl'] || "0";

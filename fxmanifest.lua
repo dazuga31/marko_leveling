@@ -26,3 +26,10 @@ files {
 server_exports {  -- виправлено на множину
   'getPlayerLevel'
 }
+
+escrow_ignore {
+  'server.lua',
+  'client.lua',
+  'config.lua',
+  'ui/*'
+}
