@@ -1,43 +1,44 @@
--- Ти пробував додати виклик з роботи буса на додавання хр за нпс.
+local ESX, QBCore = nil, nil
 
-local QBCore = exports['qb-core']:GetCoreObject()
+if Config.FrameWork == 'ESX' then
+    ESX = exports["es_extended"]:getSharedObject()
+elseif Config.FrameWork == 'QB' then
+    QBCore = exports['qb-core']:GetCoreObject()
+end
+
 
 RegisterServerEvent('checkplayerlvlbyUI')
 AddEventHandler('checkplayerlvlbyUI', function()
-    -- Тут ми можемо створити статичні дані для рівня гравця
     local playerLevel = 5 -- Наприклад, рівень гравця 5
     local playerExperience = 500 -- Наприклад, досвід гравця 500
-
-    -- Створюємо об'єкт з даними про рівень та досвід гравця
     local playerData = {
         level = playerLevel,
         experience = playerExperience
     }
 
-    -- Відправляємо дані клієнту через NUI
     TriggerClientEvent('updatePlayerLevelUI', source, playerData)
 end)
 
 
-
-
 RegisterCommand("lvlcheck", function(source, args, rawCommand)
-    local src = source
-
-    -- Функція для отримання ідентифікатора гравця
-    local function getPlayerIdentifier(player)
-        return QBCore.Functions.GetIdentifier(player, 'license')
+    local identifier = nil
+    if Config.FrameWork == 'ESX' then
+        local identifiers = GetPlayerIdentifiers(source)
+        -- Перебираємо ідентифікатори гравця, щоб знайти потрібний
+        for _, id in ipairs(identifiers) do
+            if string.match(id, "license") then
+                identifier = id
+                break
+            end
+        end
+    elseif Config.FrameWork == 'QB' then
+        local xPlayer = QBCore.Functions.GetPlayer(source)
+        identifier = xPlayer.PlayerData.license
     end
 
-    -- Отримання ідентифікатора гравця
-    local identifier = getPlayerIdentifier(src)
-
-    -- Перевірка наявності ідентифікатора
     if identifier then
-        -- Виконання запиту до бази даних для отримання інформації про гравця
         exports.oxmysql:execute('SELECT * FROM marko_leveling WHERE identifier = ?', {identifier}, function(result)
             if result[1] then
-                -- Якщо гравець знайдений в базі даних, виводимо інформацію
                 local playerData = result[1]
                 if Config.DebugMode then
                     print("Player data found:")
@@ -57,24 +58,22 @@ RegisterCommand("lvlcheck", function(source, args, rawCommand)
                     print("Player Level:", playerData.player_lvl)
                     print("Player Playtime:", playerData.player_playtime)
                 end
-
-                -- Можна також відправити інформацію гравцю через повідомлення в гру
-                TriggerClientEvent('lvlcheck:result', src, playerData)
+                TriggerClientEvent('lvlcheck:result', source, playerData)
             else
-                -- Якщо гравець не знайдений в базі даних
                 if Config.DebugMode then
                     print("Player data not found in the database.")
                 end
+                TriggerClientEvent('lvlcheck:error', source, "No player data found.")
             end
         end)
     else
         if Config.DebugMode then
             print("Unable to get your identifier.")
         end
-        return
+        TriggerClientEvent('lvlcheck:error', source, "Unable to get your identifier.")
     end
-
 end)
+
 
 
 local function addExperience(identifier, columnName, amount)
@@ -252,22 +251,31 @@ end)
 -- Реєстрація серверної події для додавання досвіду гравцю
 RegisterServerEvent('addPlayerExperience')
 AddEventHandler('addPlayerExperience', function(columnName, amount, src)
-    -- Виведення інформації про подію, якщо ввімкнено режим налагодження
     if Config.DebugMode then
         print(Config.Lang["DebugMessages"]["EventAddPlayerExperienceTriggered"]:format(src))
         print(Config.Lang["DebugMessages"]["AddingExperienceToColumn"]:format(columnName))
         print(Config.Lang["DebugMessages"]["AmountOfExperienceToAdd"]:format(amount))
     end
-    
-    -- Отримання ідентифікатора гравця
-    local identifier = QBCore.Functions.GetIdentifier(src, 'license')
-    print(Config.Lang["DebugMessages"]["AddPlayerExperiencePlayerIdentifier"]:format(identifier))
+
+    local identifier = nil
+    if Config.FrameWork == 'ESX' then
+        local identifiers = GetPlayerIdentifiers(src)
+        -- Перебираємо ідентифікатори гравця, щоб знайти потрібний
+        for _, id in ipairs(identifiers) do
+            if string.match(id, "license") then
+                identifier = id
+                break
+            end
+        end
+    elseif Config.FrameWork == 'QB' then
+        local xPlayer = QBCore.Functions.GetPlayer(src)
+        identifier = xPlayer.PlayerData.license
+    end
 
     if identifier then
         -- Додавання досвіду гравцю
         addExperience(identifier, columnName, amount)
     else
-        -- Виведення повідомлення про неможливість отримання ідентифікатора гравця, якщо ввімкено режим налагодження
         if Config.DebugMode then
             print(Config.Lang["DebugMessages"]["AddPlayerExperienceUnableToGetIdentifier"]:format(src))
         end
@@ -277,16 +285,41 @@ end)
 
 
 
+
+
+
 RegisterServerEvent('requestDataFromServer')
 AddEventHandler('requestDataFromServer', function(playerId)
     local src = source  -- Зберігаємо source, який є ідентифікатором гравця у вашій сесії сервера
-    local xPlayer = QBCore.Functions.GetPlayer(src)
-    if xPlayer then
-        local identifier = xPlayer.PlayerData.license
-        local firstName = xPlayer.PlayerData.charinfo.firstname
-        local lastName = xPlayer.PlayerData.charinfo.lastname
+    local identifier, firstName, lastName
+
+    if Config.FrameWork == 'ESX' then
+        local identifiers = GetPlayerIdentifiers(src)
+        -- Перебираємо ідентифікатори гравця, щоб знайти потрібний
+        for _, id in ipairs(identifiers) do
+            if string.match(id, "license") then
+                identifier = id
+                break
+            end
+        end
+        if identifier then
+            local xPlayer = ESX.GetPlayerFromId(src)
+            if xPlayer then
+                firstName = xPlayer.get('firstName')
+                lastName = xPlayer.get('lastName')
+            end
+        end
+    elseif Config.FrameWork == 'QB' then
+        local xPlayer = QBCore.Functions.GetPlayer(src)
+        if xPlayer then
+            identifier = xPlayer.PlayerData.license
+            firstName = xPlayer.PlayerData.charinfo.firstname
+            lastName = xPlayer.PlayerData.charinfo.lastname
+        end
+    end
+
+    if identifier then
         local query = "SELECT * FROM marko_leveling WHERE identifier = ?"
-        
         exports.oxmysql:execute(query, {identifier}, function(results)
             if results and #results > 0 then
                 local data = results[1]
@@ -305,15 +338,26 @@ end)
 
 
 
+
+
+
 AddEventHandler('playerConnecting', function(playerName, setKickReason, deferrals)
     local src = source
-    local identifier = QBCore.Functions.GetIdentifier(src, 'license') -- Отримання ідентифікатора гравця
+    local identifiers = GetPlayerIdentifiers(src)
+    local identifier = nil
+
+    for _, id in ipairs(identifiers) do
+        if string.match(id, "license") then
+            identifier = id
+            break
+        end
+    end
+
     if identifier then
-        -- Перевірка чи гравець є в базі даних
         exports.oxmysql:execute('SELECT * FROM marko_leveling WHERE `identifier` = ?', {identifier}, function(rows)
             if not rows[1] then
-                -- Гравець відсутній в базі даних, додаємо його зі значеннями за замовчуванням
-                exports.oxmysql:execute('INSERT INTO marko_leveling (identifier, busdriver_xp, busdriver_lvl, lumberjack_xp, lumberjack_lvl, gruppe_xp, gruppe_lvl, deliveryman_xp, deliveryman_lvl, postman_xp, postman_lvl, player_xp, player_lvl, player_playtime, medic_xp, medic_lvl, toolbox_xp, toolbox_lvl, carreturn_xp, carreturn_lvl, carjack_xp, carjack_lvl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', {identifier, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, function(rows)
+                local queryData = {identifier, table.unpack(Config.PlayerDefaultData.defaultValues)}
+                exports.oxmysql:execute('INSERT INTO marko_leveling (' .. Config.PlayerDefaultData.columns .. ') VALUES (' .. Config.PlayerDefaultData.values .. ')', queryData, function(result)
                     if Config.DebugMode then
                         print(Config.Lang["DebugMessages"]["AddedNewPlayerToDatabase"]:format(identifier))
                     end
@@ -321,10 +365,20 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
             end
         end)
     else
-        -- Якщо не вдалося отримати ідентифікатор, відхиляємо підключення
         deferrals.done(Config.Lang["DebugMessages"]["UnableToRetrievePlayerIdentifier"])
     end
 end)
+
+
+
+function split(s, delimiter)
+    local result = {}
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match)
+    end
+    return result
+end
+
 
 
 
@@ -334,8 +388,30 @@ AddEventHandler('RewardPlayer', function(src, itemID, itemQuantity, lvlColumn, m
     if Config.DebugMode then
         print(Config.Lang["DebugMessages"]["ReceivedRewardPlayer"]:format(src))
     end
-    
-    local identifier = QBCore.Functions.GetIdentifier(src, 'license')
+
+    local identifier = nil
+    local xPlayer = nil
+
+    -- Отримання ідентифікатора гравця та xPlayer відповідно до фреймворку
+    if Config.FrameWork == 'ESX' then
+        local identifiers = GetPlayerIdentifiers(src)
+        -- Перебираємо ідентифікатори гравця, щоб знайти потрібний
+        for _, id in ipairs(identifiers) do
+            if string.match(id, "license") then
+                identifier = id
+                break
+            end
+        end
+        if identifier then
+            xPlayer = ESX.GetPlayerFromIdentifier(identifier)
+        end
+    elseif Config.FrameWork == 'QB' then
+        xPlayer = QBCore.Functions.GetPlayer(src)
+        if xPlayer then
+            identifier = xPlayer.PlayerData.license
+        end
+    end
+
     if identifier then
         exports.oxmysql:execute('SELECT ?? FROM marko_leveling WHERE `identifier` = ?', {lvlColumn, identifier}, function(rows)
             if rows[1] then
@@ -344,55 +420,30 @@ AddEventHandler('RewardPlayer', function(src, itemID, itemQuantity, lvlColumn, m
                     print(Config.Lang["DebugMessages"]["PlayerLevelForPlayer"]:format(src, playerLevel))
                 end
                 
-                local xPlayer = QBCore.Functions.GetPlayer(src)
-                
                 -- Отримання кількості грошей відповідно до рівня гравця, якщо гроші активовані
                 local moneyAmount = 0
                 if moneyTrigger == 'true' then
                     moneyAmount = Config.Reward[lvlColumn][playerLevel]
                 end
-                
+
                 -- Логіка нагородження гравця
-                if moneyAmount > 0 then
-                    xPlayer.Functions.AddMoney('bank', moneyAmount)
-                    if Config.DebugMode then
-                        print(Config.Lang["DebugMessages"]["AddedMoneyToPlayer"]:format(moneyAmount, src))
-                    end
-                end
-                
+                GivePlayerRewardMoney(src, moneyAmount, Config.FrameWork)
+
                 if itemID and itemQuantity and itemID ~= "none" then
-                    xPlayer.Functions.AddItem(itemID, itemQuantity)
+                    xPlayer.addInventoryItem(itemID, itemQuantity)
                     if Config.DebugMode then
                         print(Config.Lang["DebugMessages"]["AddedItemToPlayer"]:format(itemID, itemQuantity, src))
                     end
                 end
 
-                Citizen.Wait(1000) -- Затримка в 10 секунд (7000 мілісекунд)
                 -- Нотифікація гравця
                 if Config.NotificationType == "qb" then
-                    if moneyAmount > 0 and itemID and itemQuantity and itemID ~= "none" then
-                        TriggerClientEvent('QBCore:Notify', src, Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID), 'success')
-                    elseif moneyAmount > 0 then
-                        TriggerClientEvent('QBCore:Notify', src, Config.Lang["RewardMessages"]["ReceivedMoney"]:format(moneyAmount), 'success')
-                    elseif itemID and itemQuantity and itemID ~= "none" then
-                        TriggerClientEvent('QBCore:Notify', src, Config.Lang["RewardMessages"]["ReceivedItem"]:format(itemQuantity, itemID), 'success')
-                    end
+                    TriggerClientEvent('QBCore:Notify', src, Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID), 'success')
+                elseif Config.NotificationType == "esx" then
+                    xPlayer.showNotification(Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID))
                 elseif Config.NotificationType == "17mov" then
-                    local msg
-                    if moneyAmount > 0 and itemID and itemQuantity and itemID ~= "none" then
-                        msg = Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID)
-                    elseif moneyAmount > 0 then
-                        msg = Config.Lang["RewardMessages"]["ReceivedMoney"]:format(moneyAmount)
-                    elseif itemID and itemQuantity and itemID ~= "none" then
-                        msg = Config.Lang["RewardMessages"]["ReceivedItem"]:format(itemQuantity, itemID)
-                    end
-                    RegisterNetEvent('17mov_DrawDefaultNotification'..GetCurrentResourceName(), function(msg)
-                        Notify(msg)
-                    end)
-                    TriggerClientEvent("17mov_DrawDefaultNotification"..GetCurrentResourceName(), src, msg)
+                    TriggerClientEvent("17mov_DrawDefaultNotification"..GetCurrentResourceName(), src, Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID))
                 end
-                
-                
             else
                 if Config.DebugMode then
                     print(Config.Lang["DebugMessages"]["FailedToGetPlayerLevel"]:format(src))
@@ -407,6 +458,47 @@ AddEventHandler('RewardPlayer', function(src, itemID, itemQuantity, lvlColumn, m
 end)
 
 
+function GivePlayerRewardMoney(src, amount, framework)
+    if amount <= 0 then
+        if Config.DebugMode then
+            print("GivePlayerRewardMoney: Amount is less than or equal to zero. Check that the amount is correctly calculated and passed.")
+        end
+        return
+    end
+
+    local xPlayer = nil
+    if framework == 'ESX' then
+        xPlayer = ESX.GetPlayerFromId(src)
+    elseif framework == 'QB' then
+        xPlayer = QBCore.Functions.GetPlayer(src)
+    end
+
+    if not xPlayer then
+        if Config.DebugMode then
+            print("GivePlayerRewardMoney: Failed to retrieve xPlayer for source " .. src)
+        end
+        return
+    end
+
+    if Config.DebugMode then
+        print("Attempting to add money: " .. amount .. " to player's bank in framework: " .. framework)
+    end
+
+    if framework == 'ESX' then
+        xPlayer.addAccountMoney('bank', amount)
+        if Config.DebugMode then
+            print("Money added using ESX framework for player: " .. src)
+        end
+    elseif framework == 'QB' then
+        xPlayer.Functions.AddMoney('bank', amount)
+        if Config.DebugMode then
+            print("Money added using QBCore framework for player: " .. src)
+        end
+    else
+        print("GivePlayerRewardMoney: Unsupported framework specified: " .. tostring(framework))
+    end
+end
+
 
 
 -- Функція для оновлення рівня гравця
@@ -416,6 +508,3 @@ AddEventHandler('marko_busjob:server:UpdatePlayerLevel', function()
     local src = source
     UpdatePlayerLevel(src)
 end)
-
-
-

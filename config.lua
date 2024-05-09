@@ -2,11 +2,16 @@
 Config = {}
 Config.Lang = {}
 
+-- For using ESX, uncomment line in shared_scripts /fxmanifext.lua
+Config.FrameWork = 'QB' -- ESX or QB.
+
+
 Config.XpPreCheck = true
 Config.DebugMode = true
 
--- Тип нотифікації ("qb" або "17mov")
-Config.NotificationType = "17mov"
+Config.NotificationType = "17mov" -- 17mov, esx, qb
+
+
 
 Config.Levels = {
 
@@ -436,6 +441,18 @@ Config.Levels = {
     }
 
 }
+--[[
+    Config.PlayerDefaultData is responsible for a request to the database to save information about a player that is stored in it for the first time.
+    If you have added or removed columns from the database that contain experience or level, then do not forget to make changes here to avoid further errors.
+]]
+
+Config.PlayerDefaultData = {
+    columns = "identifier, player_id, busdriver_xp, busdriver_lvl, lumberjack_xp, lumberjack_lvl, medic_xp, medic_lvl, gruppe_xp, gruppe_lvl, deliveryman_xp, deliveryman_lvl, postman_xp, postman_lvl, player_xp, player_lvl, player_playtime, toolbox_xp, toolbox_lvl, carreturn_xp, carreturn_lvl, carjack_xp, carjack_lvl, total_count_carjack, total_return",
+    values = "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?",
+    defaultValues = {nil, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+}
+
+
 
 Config.Reward = {
     medic_lvl = {
@@ -776,7 +793,9 @@ Config.Lang["DebugMessages"] = {
      FailedToUpdateLevel = "Не вдалося оновити рівень.",
      FailedToUpdateXP = "Не вдалося оновити XP.",
      FailedToGetCurrentValues = "Не вдалося отримати поточні значення для стовпця: %s",
-
+     FailedToGetESXPlayer = "Не вдалося отримати ідентифікатор гравця: %s",
+     ReceivedMoneyAndItem = "Отримано гроші: %s та предмет: %sx%s",
+     FailedToGetPlayerFromIdentifier = "Не вдалося отримати ідентифікатор гравця: %s",
 }
 
 

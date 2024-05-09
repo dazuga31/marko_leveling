@@ -14,7 +14,8 @@ server_scripts {  -- виправлено на множину
 } 
 
 shared_scripts {
-  'config.lua'
+  'config.lua',
+  --'@es_extended/imports.lua'
 }
 
 ui_page 'ui/index.html'
