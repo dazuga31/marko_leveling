@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS `marko_leveling` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `player_id` int(11) DEFAULT NULL,
-  `identifier` varchar(50) DEFAULT NULL,
+  `identifier` varchar(250) DEFAULT NULL,
   `busdriver_xp` int(11) DEFAULT 0,
   `busdriver_lvl` int(11) DEFAULT 0,
   `lumberjack_xp` int(11) DEFAULT 0,
