@@ -9,7 +9,7 @@ The script is easily implemented in any other script, so it is perfect for begin
 * **Ukrainian** [InstallationUA.md](InstallationUA.md).
 
 ##### Sowcase with new UI - Just click on picture :)
-[<img src="https://imgur.com/mEH5AJE" width="50%">](https://youtu.be/TxTY8hCCl5M "Sowcase with new UI: 55")
+[<img src="https://i.imgur.com/mEH5AJE.png" width="50%">](https://youtu.be/TxTY8hCCl5M "Sowcase with new UI: 55")
 
 ## Other Scripts
 
