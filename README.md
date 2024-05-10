@@ -8,6 +8,11 @@ The script is easily implemented in any other script, so it is perfect for begin
 * **English** [InstallationENG.md](InstallationENG.md).
 * **Ukrainian** [InstallationUA.md](InstallationUA.md).
 
+Sowcase with new UI
+https://youtu.be/TxTY8hCCl5M
+
+[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://youtu.be/TxTY8hCCl5M "Sowcase with new UI: 55")
+
 ## Other Scripts
 
 [  [**TEBEX**]](https://marko-scripts.tebex.io/category/2612556)
