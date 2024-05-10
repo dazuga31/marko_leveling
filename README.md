@@ -8,12 +8,8 @@ The script is easily implemented in any other script, so it is perfect for begin
 * **English** [InstallationENG.md](InstallationENG.md).
 * **Ukrainian** [InstallationUA.md](InstallationUA.md).
 
-Sowcase with new UI
-[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://youtu.be/TxTY8hCCl5M "Sowcase with new UI: 55")
-
-[![Now in Android: 55]
-(https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg)] // Thumbnail
-(https://www.youtube.com/watch?v=Hc79sDi3f0U "Now in Android: 55")
+##### Sowcase with new UI - Just click on picture :)
+[<img src="https://imgur.com/mEH5AJE" width="50%">](https://youtu.be/TxTY8hCCl5M "Sowcase with new UI: 55")
 
 ## Other Scripts
 
