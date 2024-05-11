@@ -9,8 +9,8 @@ end
 
 RegisterServerEvent('checkplayerlvlbyUI')
 AddEventHandler('checkplayerlvlbyUI', function()
-    local playerLevel = 5 -- Наприклад, рівень гравця 5
-    local playerExperience = 500 -- Наприклад, досвід гравця 500
+    local playerLevel = 5
+    local playerExperience = 500
     local playerData = {
         level = playerLevel,
         experience = playerExperience
@@ -76,7 +76,8 @@ end)
 
 
 
-local function addExperience(identifier, columnName, amount)
+
+local function addExperience(source, identifier, columnName, amount)
     if not identifier then
         if Config.DebugMode then
             print(Config.Lang["DebugMessages"]["NoIdentifier"])
@@ -84,9 +85,9 @@ local function addExperience(identifier, columnName, amount)
         return
     end
 
-    local role = columnName:gsub("_xp", "")  -- Визначаємо роль з назви колонки
+    local role = columnName:gsub("_xp", "")  -- We determine the role from the name of the column
     local levelColumn = Config.LevelColumns[role] and Config.LevelColumns[role].lvl or nil
-    local playerXPColumn = 'player_xp'  -- Назва колонки для загального досвіду гравця
+    local playerXPColumn = 'player_xp'-- Column name for overall player experience
 
     if not levelColumn then
         if Config.DebugMode then
@@ -99,14 +100,16 @@ local function addExperience(identifier, columnName, amount)
         print(string.format(Config.Lang["DebugMessages"]["InitiatingXPUpdate"], columnName))
     end
 
-    -- Вибірка поточних значень досвіду та рівня
     exports.oxmysql:execute('SELECT `' .. columnName .. '`, `' .. levelColumn .. '`, `' .. playerXPColumn .. '` FROM marko_leveling WHERE `identifier` = ?', {identifier}, function(rows)
         if rows and rows[1] then
             local currentXP = rows[1][columnName] or 0
             local currentLevel = rows[1][levelColumn] or 0
-            local currentPlayerXP = rows[1][playerXPColumn] or 0
             local newXP = currentXP + amount
-            local newPlayerXP = currentPlayerXP + 1  -- Збільшення player_xp на 1
+            local totalXPNeededForNextLevel = Config.Levels[role .. "_lvl"][currentLevel + 1] or 0  -- Повна кількість XP для наступного рівня
+
+            if Config.NotifyPlayerWhenAddEXP then
+            NotifyAddPlayerExperience(role, currentXP, newXP, currentLevel, currentLevel + 1, totalXPNeededForNextLevel, source)
+            end
 
             if Config.DebugMode then
                 print(string.format(Config.Lang["DebugMessages"]["CurrentAndNewXP"], currentXP, newXP))
@@ -245,7 +248,15 @@ end)
 
 
 
-
+function NotifyAddPlayerExperience(role, currentXP, newXP, currentLevel, newLevel, xpToNextLevel, source)
+    if GetPlayerName(source) then
+        TriggerClientEvent('playerExperience:update', source, role, currentXP, newXP, currentLevel, newLevel, xpToNextLevel)
+    else
+        if Config.DebugMode then
+            print("Player not found with source:", source)
+        end
+    end
+end
 
 
 -- Реєстрація серверної події для додавання досвіду гравцю
@@ -274,7 +285,8 @@ AddEventHandler('addPlayerExperience', function(columnName, amount, src)
 
     if identifier then
         -- Додавання досвіду гравцю
-        addExperience(identifier, columnName, amount)
+        addExperience(src, identifier, columnName, amount)
+        
     else
         if Config.DebugMode then
             print(Config.Lang["DebugMessages"]["AddPlayerExperienceUnableToGetIdentifier"]:format(src))
@@ -282,20 +294,24 @@ AddEventHandler('addPlayerExperience', function(columnName, amount, src)
     end
 end)
 
-
-
-
+--- This command is only for test, please delete it after testing.
+RegisterCommand("givetestxp", function(source, args, rawCommand)
+    local columnName = "oilrig_xp" -- Name of the column to which the experience will be added (you can change this according to your needs)
+    local amount = 1 -- Amount of experience to add (you can also change this)
+   
+    -- Call the addPlayerExperience event
+    TriggerEvent("addPlayerExperience", columnName, amount, source)
+end, false)
 
 
 
 RegisterServerEvent('requestDataFromServer')
 AddEventHandler('requestDataFromServer', function(playerId)
-    local src = source  -- Зберігаємо source, який є ідентифікатором гравця у вашій сесії сервера
+    local src = source
     local identifier, firstName, lastName
 
     if Config.FrameWork == 'ESX' then
         local identifiers = GetPlayerIdentifiers(src)
-        -- Перебираємо ідентифікатори гравця, щоб знайти потрібний
         for _, id in ipairs(identifiers) do
             if string.match(id, "license") then
                 identifier = id
@@ -323,7 +339,7 @@ AddEventHandler('requestDataFromServer', function(playerId)
         exports.oxmysql:execute(query, {identifier}, function(results)
             if results and #results > 0 then
                 local data = results[1]
-                data.fullName = firstName .. " " .. lastName  -- Додаємо ім'я та прізвище до даних
+                data.fullName = firstName .. " " .. lastName
                 TriggerClientEvent('receiveDataFromServer', src, data)
             else
                 TriggerClientEvent('receiveDataFromServer', src, { error = "No data found" })
@@ -371,6 +387,7 @@ end)
 
 
 
+
 function split(s, delimiter)
     local result = {}
     for match in (s..delimiter):gmatch("(.-)"..delimiter) do
@@ -392,10 +409,8 @@ AddEventHandler('RewardPlayer', function(src, itemID, itemQuantity, lvlColumn, m
     local identifier = nil
     local xPlayer = nil
 
-    -- Отримання ідентифікатора гравця та xPlayer відповідно до фреймворку
     if Config.FrameWork == 'ESX' then
         local identifiers = GetPlayerIdentifiers(src)
-        -- Перебираємо ідентифікатори гравця, щоб знайти потрібний
         for _, id in ipairs(identifiers) do
             if string.match(id, "license") then
                 identifier = id
@@ -420,13 +435,11 @@ AddEventHandler('RewardPlayer', function(src, itemID, itemQuantity, lvlColumn, m
                     print(Config.Lang["DebugMessages"]["PlayerLevelForPlayer"]:format(src, playerLevel))
                 end
                 
-                -- Отримання кількості грошей відповідно до рівня гравця, якщо гроші активовані
                 local moneyAmount = 0
                 if moneyTrigger == 'true' then
                     moneyAmount = Config.Reward[lvlColumn][playerLevel]
                 end
 
-                -- Логіка нагородження гравця
                 GivePlayerRewardMoney(src, moneyAmount, Config.FrameWork)
 
                 if itemID and itemQuantity and itemID ~= "none" then
@@ -434,15 +447,6 @@ AddEventHandler('RewardPlayer', function(src, itemID, itemQuantity, lvlColumn, m
                     if Config.DebugMode then
                         print(Config.Lang["DebugMessages"]["AddedItemToPlayer"]:format(itemID, itemQuantity, src))
                     end
-                end
-
-                -- Нотифікація гравця
-                if Config.NotificationType == "qb" then
-                    TriggerClientEvent('QBCore:Notify', src, Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID), 'success')
-                elseif Config.NotificationType == "esx" then
-                    xPlayer.showNotification(Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID))
-                elseif Config.NotificationType == "17mov" then
-                    TriggerClientEvent("17mov_DrawDefaultNotification"..GetCurrentResourceName(), src, Config.Lang["RewardMessages"]["ReceivedMoneyAndItem"]:format(moneyAmount, itemQuantity, itemID))
                 end
             else
                 if Config.DebugMode then

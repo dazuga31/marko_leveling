@@ -1,5 +1,6 @@
 RegisterCommand("showLVLui", function()
     TriggerServerEvent('checkplayerlvlbyUI', source)
+    
     SetNuiFocus(true, true)
     SendNUIMessage({
         type = "show_ui"
@@ -63,3 +64,28 @@ RegisterNUICallback('requestData', function(data, cb)
     requestDataFromServer()
     cb('ok')  -- Відправлення відповіді назад у веб-інтерфейс
 end)
+
+
+
+RegisterNetEvent('playerExperience:update')
+AddEventHandler('playerExperience:update', function(role, currentXP, newXP, currentLevel, newLevel, xpToNextLevel)
+    print("Player experience update:")
+    print("Role:", role)
+    print("Current XP:", currentXP)
+    print("New XP:", newXP)
+    print("Current Level:", currentLevel)
+    print("New Level:", newLevel)
+    print("XP to Next Level:", xpToNextLevel)  -- Додаємо вивід у консоль
+
+    -- Відправка даних на HTML сторінку через NUI
+    SendNUIMessage({
+        action = "updateExperience",
+        role = role,
+        currentXP = currentXP,
+        newXP = newXP,
+        currentLevel = currentLevel,
+        newLevel = newLevel,
+        xpToNextLevel = xpToNextLevel  -- Включаємо xpToNextLevel в дані, які відправляються
+    })
+end)
+
