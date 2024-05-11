@@ -11,6 +11,8 @@ The script is easily implemented in any other script, so it is perfect for begin
 ##### Sowcase with new UI - Just click on picture :)
 [<img src="https://i.imgur.com/mEH5AJE.png" width="50%">](https://youtu.be/TxTY8hCCl5M "Sowcase with new UI: 55")
 
+[<img src="https://i.imgur.com/ClGlR4N.png" width="50%">](https://youtu.be/S1BcGt5Gfrs "Sowcase - NOTIFICATION UI: 55")
+
 ## Other Scripts
 
 [  [**TEBEX**]](https://marko-scripts.tebex.io/category/2612556)
