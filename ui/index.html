@@ -1,81 +1,158 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Unuion RolePlay</title>
+    
+    <title>Union RolePlay</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div id="ui-container">
-        <h1>UNION ROLEPLAY</h1>
-        <h2><i class="fas fa-user-plus"></i> <span id="user-name">Користувач</span></h2>
-        <p>Рівень: <span id="player-level">1</span></p>
-        <p>Досвід: <span id="player-exp">0</span></p>
-        
-        <!-- Grid box -->
-        <div class="grid-box">
-            <!-- Section for Medic -->
-            <div class="profession-section">
-                <h2><i class="fas fa-user-md"></i> Медик</h2>
-                <p>Рівень: <span id="medic-level">1</span></p>
-                <p>Досвід: <span id="medic-exp">0</span></p>
+        <button class="button" data-text="Awesome">
+            <span class="actual-text">&nbsp;UNION⠀ROLEPLAY&nbsp;</span>
+            <span aria-hidden="true" class="hover-text">&nbsp;UNION⠀ROLEPLAY&nbsp;</span>
+        </button>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+        <div class="main-grid">
+            <div class="left-vertical-block">
+                <div class="playerdata-section">
+                <h2><i class="fas fa-user-plus"></i> <span id="user-name">Користувач</span></h2>
+                <div class="progressbar" id="player-level-bar"></div>
             </div>
 
-            <!-- Section for Bus Driver -->
-            <div class="profession-section">
-                <h2><i class="fas fa-bus"></i> Водій Автобуса</h2>
-                <p>Рівень: <span id="busdriver-level">1</span></p>
-                <p>Досвід: <span id="busdriver-exp">0</span></p>
-            </div>
 
-            <!-- Section for Lumberjack -->
-            <div class="profession-section">
-                <h2><i class="fas fa-tree"></i> Лісоруб</h2>
-                <p>Рівень: <span id="lumberjack-level">1</span></p>
-                <p>Досвід: <span id="lumberjack-exp">0</span></p>
-            </div>
+            </div> <!-- Лівий вертикальний блок -->
+            
+            <div class="right-section">
+                <!-- Перший горизонтальний блок -->
+                <div class="top-horizontal-block">
+                    <div class="grid-box"> <!-- Існуюча grid-box для професій -->
+                        <!-- Вміст вже існуючої grid-box вставлений тут -->
 
-            <!-- Section for Gruppe -->
-            <div class="profession-section">
-                <h2><i class="fas fa-piggy-bank"></i></i>Інкасатор</h2>
-                <p>Рівень: <span id="gruppe-level">1</span></p>
-                <p>Досвід: <span id="gruppe-exp">0</span></p>
-            </div>
+            
+                        <!-- Section for Bus Driver -->
+                        <div class="profession-section">
+                            <h2><i class="fas fa-bus"></i>Bus Driver</h2>
+                            <div class="progressbar" id="busdriver-level-bar"></div>
+                        </div>
+           
+                        <!-- Section for Lumberjack -->
+                        <div class="profession-section">
+                            <h2><i class="fas fa-tree"></i>Lumberjack</h2>
+                            <div class="progressbar" id="lumberjack-level-bar"></div>
+                        </div>
+           
+                        <!-- Section for Group -->
+                        <div class="profession-section">
+                            <h2><i class="fas fa-piggy-bank"></i>Gruppe</h2>
+                            <div class="progressbar" id="group-level-bar"></div>
+                        </div>
+           
+                        <!-- Section for Deliveryman -->
+                        <div class="profession-section">
+                            <h2><i class="fas fa-truck-loading"></i>Courier </h2>
+                            <div class="progressbar" id="deliveryman-level-bar"></div>
+                        </div>
+           
+                        <!-- Section for Postman -->
+                        <div class="profession-section">
+                            <h2><i class="fas fa-envelope"></i>Postman</h2>
+                            <div class="progressbar" id="postman-level-bar"></div>
+                        </div>
+           
+                        <!-- Section for General Players -->
+                        <div class="profession-section">
+                            <h2><i class="fas fa-user-md"></i>Mechanic</h2>
+                            <div class="progressbar" id="toolbox-level-bar"></div>
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fas fa-user-secret"></i>Car hijack</h2>
+                            <div class="progressbar" id="carjack-level-bar"></div>
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-solid fa-anchor"></i>Fishing</h2>
+                            <div class="progressbar" id="fisherman-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fas fa-user-shield"></i>Miner</h2>
+                            <div class="progressbar" id="miner-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-solid fa-dumpster-fire"></i>Dealer</h2>
+                            <div class="progressbar" id="drugdroper-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-solid fa-oil-well"></i>OilRig</h2>
+                            <div class="progressbar" id="oilrig-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-solid fa-helmet-safety"></i>Building</h2>
+                            <div class="progressbar" id="builder-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-solid fa-seedling"></i>Farming</h2>
+                            <div class="progressbar" id="farmer-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-solid fa-plug-circle-bolt"></i>Electrician</h2>
+                            <div class="progressbar" id="electrician-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-solid fa-house-circle-exclamation"></i>Hacker</h2>
+                            <div class="progressbar" id="houserobbery-level-bar"></div>
+                           
+                        </div>
+                        <div class="profession-section">
+                            <h2><i class="fa-brands fa-sticker-mule"></i>Empty</h2>
+                            <div class="progressbar" id="carreturn2-level-bar"></div>
+                           
+                        </div>
+                        
+                    </div>
+                </div>
 
-            <!-- Section for Deliveryman -->
-            <div class="profession-section">
-                <h2><i class="fas fa-truck-loading"></i></i>Кур'єр </h2>
-                <p>Рівень: <span id="deliveryman-level">1</span></p>
-                <p>Досвід: <span id="deliveryman-exp">0</span></p>
-            </div>
+                <!-- Другий горизонтальний блок -->
+                <div class="bottom-horizontal-block">
+                    <!-- Ще додатковий контент може бути тут -->
+                    <div class="profession-section">
+                        <h2><i class="fas fa-user-md"></i> Medic</h2>
+                        <div class="progressbar" id="medic-level-bar"></div>
+                    </div>
+                    </div>
 
-            <!-- Section for Postman -->
-            <div class="profession-section">
-                <h2><i class="fas fa-envelope"></i></i>Листоноша</h2>
-                <p>Рівень: <span id="postman-level">1</span></p>
-                <p>Досвід: <span id="postman-exp">0</span></p>
-            </div>
-
-            <!-- Section for General Player -->
-            <div class="profession-section">
-                <h2><i class="fas fa-user-md"></i>Механік</h2>
-                <p>Рівень: <span id="toolbox-level">1</span></p>
-                <p>Досвід: <span id="toolbox-exp">0</span></p>
-            </div>
-            <div class="profession-section">
-                <h2><i class="fas fa-user-secret"></i>Автовикрадач</h2>
-                <p>Рівень: <span id="carjack-level">1</span></p>
-                <p>Досвід: <span id="carjack-exp">0</span></p>
-            </div>
-            <div class="profession-section">
-                <h2><i class="fas fa-user-shield"></i></i>Патрульний Офіцер</h2>
-                <p>Рівень: <span id="police_carreturner-level">1</span></p>
-                <p>Досвід: <span id="police_carreturner-exp">0</span></p>
+                </div>
             </div>
         </div>
     </div>
+
+    <div id="xpUpdateContainer">
+        <p id="role">
+            <i id="roleIcon" class=""></i> <!-- Іконка для візуального представлення ролі -->
+            <span id="roleName"></span> <!-- Текстовий опис ролі тут -->
+        </p>
+        <div id="xpProgressBar">
+            <div id="xpProgress">
+                <p id="xpProgressText"></p>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+
     <script src="script.js"></script>
 </body>
 </html>

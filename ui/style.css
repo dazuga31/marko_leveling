@@ -6,64 +6,157 @@ body {
 
 /* Стилізація контейнера, що вміщує UI компоненти */
 #ui-container {
-    display: none; /* Початково прихований */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Центрування контейнера на сторінці */
-    width: 80%; /* Відносна ширина від ширини вікна браузера */
-    max-width: 960px; /* Максимальна ширина контейнера */
-    background-color: #ffffffd2; /* Білий фон контейнера */
-    border: 1px solid #b0b0b0c4; /* Світло-сіра рамка навколо контейнера */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Тінь для підкреслення важливості контейнера */
-    padding: 20px;
-    border-radius: 8px; /* Закруглені краї контейнера */
-    z-index: 1000; /* Забезпечує, що контейнер буде над іншими елементами */
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1550px;
+    background: #3c3b3f;
+    border: 10px solid #050a0cdd;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 8px;
+    z-index: 1000;
+    overflow: hidden; /* Забезпечує, що всі внутрішні переповнення обрізаються */
+    min-height: 800px; /* Мінімальна висота, але може збільшуватися в залежності від вмісту */
 }
 
+
+/* Стилі для контейнера прогрес бара */
+.progressbar {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-color: #555;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progressbar-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(to right, #76c7c0, #34a7a2);
+    transition: width 0.5s ease-in-out;
+}
+
+.progress-info {
+    position: absolute;
+    top: 0; /* Вирівнювання вверх */
+    left: 0; /* Вирівнювання вліво */
+    width: 100%; /* Повна ширина батьківського контейнера */
+    height: 100%; /* Повна висота батьківського контейнера */
+    display: flex;
+    align-items: center; /* Центрування по вертикалі */
+    justify-content: center; /* Центрування по горизонталі */
+    color: white; /* Колір тексту */
+    font-size: 0.8rem; /* Розмір шрифту */
+    text-shadow: 1px 1px 2px black; /* Тінь для покращення читабельності */
+}
+
+
 h1 {
-    font-size: 2.5rem; /* Розмір шрифту для заголовка */
-    color: #007bff; /* Синій колір, який часто використовується в дизайнах Bootstrap */
-    text-transform: uppercase; /* Всі літери великі */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Тінь для тексту, що додає глибину */
+    font-size: 2.5rem;
+    color: #adb2b3; /* Світлий колір тексту для кращої видимості на темному фоні */
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* Темніша тінь для тексту */
     margin: 20px 0;
 }
 
-/* Стилізація контейнеру, де розміщені всі професії */
 .grid-box {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    width: 90%;
-    margin-top: 20px;
+    grid-template-columns: repeat(4, 1fr); /* 4 колонки з рівною шириною */
+    gap: 10px; /* Відстань між колонками і рядами */
+    padding: 10px; /* Додатковий простір всередині контейнера */
 }
 
 .profession-section {
-    background: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    padding: 20px;
+    background: #222123;
+    border: 3px solid #222;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 10px;
     transition: transform 0.3s ease-in-out;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Забезпечте рівномірний розподіл контенту */
+    align-items: center; /* Центрування елементів */
+}
+
+
+
+.progressbar {
+    width: 100%;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.playerdata-section {
+    background: #222123;
+    border: 3px solid #222; /* Темна обводка */
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.6); /* Глибша тінь для виразності */
+    border-radius: 10px;
+    padding: 15px;
+    transition: transform 0.3s ease-in-out;
+    max-width: 100%;
+    max-width: 1250px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #dcdcdc; /* Світлий колір тексту для контрасту на темному фоні */
+}
+
+.playerdata-section h2 {
+    font-size: 1.5rem; /* Розмір шрифту для заголовка */
+    color: #ffcc00; /* Яскравий колір для заголовка */
+    margin-bottom: 8px; /* Відступ знизу */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Тінь для тексту, що додає глибину */
+}
+
+.playerdata-section p {
+    font-size: 1rem; /* Розмір шрифту для параграфів */
+    color: #c1c1c2; /* Світлий сірий колір тексту */
+    margin-bottom: 5px; /* Відступ між параграфами */
+}
+
+.playerdata-section .progressbar {
+    width: 100%;
+    background-color: #333; /* Темний фон для прогрес бара */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.playerdata-section .progressbar-inner {
+    height: 10px;
+    background: linear-gradient(to right, #76c7c0, #34a7a2); /* Градієнтний фон для прогрес бара */
+    transition: width 0.5s ease-in-out;
 }
 
 .profession-section:hover {
-    transform: scale(1.05); /* При наведенні збільшуємо секцію */
+    transform: scale(1.05); /* Ефект при наведенні */
+    box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.8); /* Ще сильніша тінь при наведенні */
 }
 
 .profession-section h2 {
-    color: #0056b3;
+    color: #adb2b3; /* Світлий колір тексту для кращої видимості на темному фоні */
     margin-bottom: 10px;
 }
 
 .profession-section p {
     font-size: 16px;
-    color: #666;
+    color: #adb2b3; /* Світлий колір тексту для кращої видимості на темному фоні */
 }
 
 .profession-section span {
     font-weight: bold;
-    color: #007bff;
+    color: #adb2b3; /* Світлий колір тексту для кращої видимості на темному фоні */
 }
 
 /* Медіа-запити для адаптивності дизайну */
@@ -75,11 +168,307 @@ h1 {
 
 @media (max-width: 480px) {
     #ui-container {
-        width: 95%; /* Ширший контейнер на дуже маленьких екранах */
+        background: #0e0e0e; /* Темний фон для кожної секції професії */
+        border: 1px solid #222; /* Темна обводка, але трохи світліша ніж фон */
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.6); /* Глибша тінь для виразності */
+        border-radius: 10px;
         padding: 10px;
+        transition: transform 0.3s ease-in-out;
+        max-width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     
     .profession-section {
-        padding: 10px;
+        padding: 5px; /* Менше відступи на маленьких екранах */
     }
+}
+
+
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 3.8fr; /* Збільшуємо лівий блок пропорційно */
+    gap: 20px;
+}
+
+.left-vertical-block {
+    background-color: #222123; /* Ще темніший фон для лівого блоку */
+    padding: 20px;
+    border-radius: 5px;
+    
+}
+
+.right-section {
+    display: flex;
+    
+    flex-direction: column;
+    perspective: 1500px; /* Створення перспективи для 3D ефектів */
+    transform-style: preserve-3d; /* Дозволяє дочірнім елементам міститись у 3D просторі */
+}
+
+.top-horizontal-block, .bottom-horizontal-block {
+    background-color: #222123; /* Ще темніший фон для лівого блоку */
+    padding: 20px;
+    border-top-left-radius: 5px; /* Закруглення лівого верхнього кута */
+    border-top-right-radius: 5px; /* Закруглення правого верхнього кута */
+    border-bottom-left-radius: 0; /* Видалення закруглення для лівого нижнього кута */
+    border-bottom-right-radius: 0; /* Видалення закруглення для правого нижнього кута */
+}
+
+.bottom-horizontal-block {
+    flex: 1;
+    background-color: #222123; /* Ще темніший фон для лівого блоку */
+    padding: 20px;
+    border-top-left-radius: 0px; /* Закруглення лівого верхнього кута */
+    border-top-right-radius: 0px; /* Закруглення правого верхнього кута */
+    border-bottom-left-radius: 5px; /* Видалення закруглення для лівого нижнього кута */
+    border-bottom-right-radius: 5px; /* Видалення закруглення для правого нижнього кута */
+
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+    font-size: 17px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 30px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    border-radius: 20px;
+    left: 0.3em;
+    bottom: 0.3em;
+    background-color: white;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(1.5em);
+  }
+
+ /* === removing default button style ===*/
+.button {
+    margin: 0;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* button styling */
+  .button {
+    --border-right: 6px;
+    --text-stroke-color: rgba(255,255,255,0.6);
+    --animation-color: #37FF8B;
+    --fs-size: 2em;
+    letter-spacing: 3px;
+    text-decoration: none;
+    font-size: var(--fs-size);
+    font-family: "Arial";
+    position: relative;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-stroke-color);
+  }
+  /* this is the text, when you hover on button */
+  .hover-text {
+    position: absolute;
+    box-sizing: border-box;
+    content: attr(data-text);
+    color: var(--animation-color);
+    width: 0%;
+    inset: 0;
+    border-right: var(--border-right) solid var(--animation-color);
+    overflow: hidden;
+    transition: 0.5s;
+    -webkit-text-stroke: 1px var(--animation-color);
+  }
+  /* hover */
+  .button:hover .hover-text {
+    width: 100%;
+    filter: drop-shadow(0 0 23px var(--animation-color))
+  }
+  
+
+  .day-theme {
+    font-family: 'Segoe UI', Arial, sans-serif; /* Сучасний шрифт */
+    margin: 0;
+    padding: 0;
+    color: #333; /* Темний колір тексту для кращої видимості */
+}
+
+.day-theme #ui-container,
+.day-theme .progressbar,
+.day-theme .profession-section,
+.day-theme .playerdata-section {
+    background: #fafafa; /* Світліший тон фону, який є менш агресивним для очей */
+    color: #333;
+    border-color: #e0e0e0; /* Світліша обводка */
+}
+
+.day-theme .progressbar-inner {
+    background: linear-gradient(to right, #b3e5fc, #03a9f4); /* Блакитний градієнт для прогрес бара */
+}
+
+.day-theme h1,
+.day-theme h2 {
+    color: #424242; /* Темно-сірий колір для заголовків */
+    text-shadow: none; /* Видалення тіні для чистішого вигляду */
+}
+
+.day-theme .profession-section {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Легша тінь для елементів */
+    border-color: #e0e0e0; /* Світліша обводка */
+}
+
+.day-theme .progressbar {
+    background-color: #e0e0e0; /* Світлий фон для контейнера прогрес бара */
+}
+
+.day-theme .profession-section:hover {
+    transform: scale(1.03); /* Легкий ефект збільшення при наведенні */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15); /* Світліша тінь при наведенні */
+}
+
+.day-theme .main-grid,
+.day-theme .left-vertical-block,
+.day-theme .right-section,
+.day-theme .top-horizontal-block,
+.day-theme .bottom-horizontal-block {
+    background-color: #ffffff; /* Чисто білий фон */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05); /* Дуже легка тінь для підняття елементів */
+}
+
+.day-theme .playerdata-section .progressbar-inner {
+    background: linear-gradient(to right, #d0e0fc, #a1c9f4); /* Світлий блакитний градієнт для прогрес бара */
+}
+
+/* Покращення читабельності тексту */
+.day-theme .profession-section h2,
+.day-theme .profession-section p,
+.day-theme .profession-section span {
+    text-shadow: none; /* Видалення тіней для чіткішого тексту */
+    color: #424242; /* Однаковий колір тексту для усіх елементів */
+}
+
+
+.day-theme .button {
+    --text-stroke-color: rgba(0,0,0,0.87);  /* Темніший колір контуру тексту */
+    --animation-color: #0d47a1;  /* Темно-синій для анімації та акцентних елементів */
+}
+
+.day-theme .button {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+
+.day-theme .hover-text {
+    color: var(--animation-color);
+    background-color: transparent;
+    border-right: var(--border-right) solid var(--animation-color);
+}
+
+.day-theme .button:hover .hover-text {
+    filter: drop-shadow(0 0 8px var(--animation-color));  /* Легша тінь при наведенні */
+}
+
+/* Якщо використовується для тексту в заголовку */
+.day-theme h1.button {
+    font-size: 2.5em; /* Зберігаємо більший розмір для заголовка */
+    letter-spacing: normal; /* Нормальне розташування літер */
+}
+
+
+
+#xpUpdateContainer {
+    display: none;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px) scale(0.95); /* Зміна для анімації fade-up */
+    opacity: 0;
+    bottom: 5%;
+    width: 20%;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Оновлено для анімації */
+}
+
+
+
+#xpProgressBar {
+    position: relative;
+    width: 90%;
+    background: rgba(236, 236, 238, 0.253);
+    height: 10px;
+    border-radius: 7px;
+    
+}
+
+#xpProgress {
+    position: absolute;
+    height: 10px;
+    border-radius: 7px;
+    background: rgb(255, 255, 255);
+    width: 0%; /* Початкова ширина, яка буде змінюватися JavaScript */
+    transition: width 0.5s ease;
+    
+    
+}
+
+#xpProgressText {
+    position: absolute;
+    top: 0;
+    left: 50%; /* Вирівнювання тексту на середину прогрес-бару */
+    transform: translateX(-50%); /* Забезпечує, що текст завжди в центрі, навіть якщо прогрес-бар малий */
+    width: auto; /* Дозволяє тексту мати необхідну ширину */
+    text-align: center;
+    color: white;
+    line-height: 13px; /* Відповідає висоті прогрес-бару */
+    font-size: 10px;
+    white-space: nowrap; /* Вимикає перенос тексту */
+    overflow: visible; /* Показує текст повністю, навіть якщо він виходить за межі прогрес-бару */
 }
