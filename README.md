@@ -8,10 +8,10 @@ The script is easily implemented in any other script, so it is perfect for begin
 * **English** [InstallationENG.md](InstallationENG.md).
 * **Ukrainian** [InstallationUA.md](InstallationUA.md).
 
-##### Sowcase with new UI - Just click on picture :)
-[<img src="https://i.imgur.com/mEH5AJE.png" width="50%">](https://youtu.be/TxTY8hCCl5M "Sowcase with new UI: 55")
+##### Showcase with new UI - Just click on picture :)
+[<img src="https://i.imgur.com/mEH5AJE.png" width="50%">](https://youtu.be/TxTY8hCCl5M "Showcase with new UI: 55")
 
-[<img src="https://i.imgur.com/ClGlR4N.png" width="50%">](https://youtu.be/S1BcGt5Gfrs "Sowcase - NOTIFICATION UI: 55")
+[<img src="https://i.imgur.com/ClGlR4N.png" width="50%">](https://youtu.be/S1BcGt5Gfrs "Showcase - NOTIFICATION UI: 55")
 
 ## Other Scripts
 
