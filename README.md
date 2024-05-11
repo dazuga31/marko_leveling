@@ -15,7 +15,8 @@ The script is easily implemented in any other script, so it is perfect for begin
 
 ## Other Scripts
 
-[  [**TEBEX**]](https://marko-scripts.tebex.io/category/2612556)
+
+[![Tebex](https://img.shields.io/badge/Tebex-EYE%20STORE-00A2FF.svg)](https://marko-scripts.tebex.io/category/2612556)
 
 ## SUPPORT
-[![Discord](https://img.shields.io/badge/Discord-ES%20Community-7289DA.svg)](https://discord.gg/zXJsMTyrqN)
+[![Discord](https://img.shields.io/badge/Discord-MARKO%20SCRIPTS-7289DA.svg)](https://discord.gg/zXJsMTyrqN)
