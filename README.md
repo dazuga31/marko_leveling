@@ -18,4 +18,4 @@ The script is easily implemented in any other script, so it is perfect for begin
 [  [**TEBEX**]](https://marko-scripts.tebex.io/category/2612556)
 
 ## SUPPORT
-[**DISCORD** ](https://discord.gg/zXJsMTyrqN)
+[![Discord](https://img.shields.io/badge/Discord-ES%20Community-7289DA.svg)](https://discord.gg/zXJsMTyrqN)
